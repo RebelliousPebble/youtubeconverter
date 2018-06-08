@@ -6,7 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets, QtQuickWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -21,7 +21,7 @@ class Ui_MainWindow(object):
         self.download.setGeometry(QtCore.QRect(664, 512, 101, 31))
         self.download.setObjectName("download")
         self.processURL = QtWidgets.QPushButton(self.centralwidget)
-        self.processURL.setGeometry(QtCore.QRect(710, 410, 75, 23))
+        self.processURL.setGeometry(QtCore.QRect(710, 360, 75, 23))
         self.processURL.setObjectName("processURL")
         self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
         self.progressBar.setGeometry(QtCore.QRect(360, 512, 291, 31))
@@ -35,23 +35,25 @@ class Ui_MainWindow(object):
         self.fileType = QtWidgets.QComboBox(self.centralwidget)
         self.fileType.setGeometry(QtCore.QRect(710, 320, 69, 22))
         self.fileType.setObjectName("fileType")
+        self.fileType.addItem("")
+        self.fileType.addItem("")
         self.type = QtWidgets.QLabel(self.centralwidget)
         self.type.setGeometry(QtCore.QRect(616, 320, 81, 20))
         self.type.setObjectName("type")
         self.format = QtWidgets.QLabel(self.centralwidget)
-        self.format.setGeometry(QtCore.QRect(600, 370, 91, 20))
+        self.format.setGeometry(QtCore.QRect(600, 460, 91, 20))
         self.format.setObjectName("format")
         self.fileFormat = QtWidgets.QComboBox(self.centralwidget)
-        self.fileFormat.setGeometry(QtCore.QRect(710, 370, 69, 22))
+        self.fileFormat.setGeometry(QtCore.QRect(710, 460, 69, 22))
         self.fileFormat.setObjectName("fileFormat")
         self.dlDirectory = QtWidgets.QLineEdit(self.centralwidget)
-        self.dlDirectory.setGeometry(QtCore.QRect(360, 460, 341, 21))
+        self.dlDirectory.setGeometry(QtCore.QRect(360, 410, 341, 21))
         self.dlDirectory.setObjectName("dlDirectory")
         self.chooseDirectory = QtWidgets.QLabel(self.centralwidget)
-        self.chooseDirectory.setGeometry(QtCore.QRect(360, 440, 101, 16))
+        self.chooseDirectory.setGeometry(QtCore.QRect(360, 390, 101, 16))
         self.chooseDirectory.setObjectName("chooseDirectory")
         self.browseURL = QtWidgets.QPushButton(self.centralwidget)
-        self.browseURL.setGeometry(QtCore.QRect(710, 460, 75, 23))
+        self.browseURL.setGeometry(QtCore.QRect(710, 410, 75, 23))
         self.browseURL.setObjectName("browseURL")
         self.enterURL = QtWidgets.QLabel(self.centralwidget)
         self.enterURL.setGeometry(QtCore.QRect(360, 250, 47, 13))
@@ -73,6 +75,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.download.clicked.connect(self.urlBox.clear)
+        self.urlBox.returnPressed.connect(self.processURL.click)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.urlBox, self.fileType)
         MainWindow.setTabOrder(self.fileType, self.fileFormat)
@@ -87,20 +90,12 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Python Youtube Downloader"))
         self.download.setText(_translate("MainWindow", "Download"))
         self.processURL.setText(_translate("MainWindow", "Process URL"))
+        self.fileType.setItemText(0, _translate("MainWindow", "Video"))
+        self.fileType.setItemText(1, _translate("MainWindow", "Audio"))
         self.type.setText(_translate("MainWindow", "Choose Type"))
         self.format.setText(_translate("MainWindow", "Choose Format"))
         self.chooseDirectory.setText(_translate("MainWindow", "Choose Directory"))
         self.browseURL.setText(_translate("MainWindow", "Browse"))
         self.enterURL.setText(_translate("MainWindow", "Enter URL"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
 

@@ -1,0 +1,19 @@
+pyuic5 D:\Development\youtubeconverter\pydownload.ui -o D:\Development\youtubeconverter\qt_mainwindow.py
+
+https://www.youtube.com/watch?v=LDU_Txk06tM
+
+item = self.fileTable.horizontalHeaderItem(0)
+item.setText(_translate("MainWindow", "test"))
+
+self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
+self.checkBox.setObjectName("checkBox")
+
+You can add empty row and later populate all columns. This is how to insert row under all other rows:
+
+rowPosition = self.table.rowCount()
+table.insertRow(rowPosition)
+after that you have empty row that you can populate like this for example( if you have 3 columns):
+
+table.setItem(rowPosition , 0, QtGui.QTableWidgetItem("text1"))
+table.setItem(rowPosition , 1, QtGui.QTableWidgetItem("text2"))
+table.setItem(rowPosition , 2, QtGui.QTableWidgetItem("text3"))
