@@ -17,3 +17,9 @@ after that you have empty row that you can populate like this for example( if yo
 table.setItem(rowPosition , 0, QtGui.QTableWidgetItem("text1"))
 table.setItem(rowPosition , 1, QtGui.QTableWidgetItem("text2"))
 table.setItem(rowPosition , 2, QtGui.QTableWidgetItem("text3"))
+
+def ButtonClicked(self):
+    checked_listV5 = []
+    for i in range(self.tableV5.rowCount()):
+        if self.tableV5.item(i, 0).checkState() == QtCore.Qt.Checked:
+            checked_listV5.append(self.tableV5.item(i, 1).text())
