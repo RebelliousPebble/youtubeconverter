@@ -31,7 +31,6 @@ class YTConverter(Ui_MainWindow):
 
 
     def processurlpressed(self):
-        #* TODO setup table creation
         url = self.urlBox.text()
         if not url:
             self.consolewrite("Insert a URL to continue\n")
