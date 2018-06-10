@@ -6,218 +6,117 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>826</width>
+    <height>594</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Python Youtube Downloader</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="urlBox">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>270</y>
-      <width>421</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="download">
-    <property name="geometry">
-     <rect>
-      <x>664</x>
-      <y>512</y>
-      <width>101</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Download</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="processURL">
-    <property name="geometry">
-     <rect>
-      <x>700</x>
-      <y>330</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Process URL</string>
-    </property>
-   </widget>
-   <widget class="QProgressBar" name="progressBar">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>512</y>
-      <width>291</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="value">
-     <number>24</number>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="fileTable">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>331</width>
-      <height>521</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="fileType">
-    <property name="geometry">
-     <rect>
-      <x>704</x>
-      <y>300</y>
-      <width>69</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>Video</string>
-     </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" rowspan="10">
+     <widget class="QTableWidget" name="fileTable"/>
     </item>
-    <item>
-     <property name="text">
-      <string>Audio</string>
-     </property>
+    <item row="0" column="1" colspan="4">
+     <widget class="QTextBrowser" name="console"/>
     </item>
-   </widget>
-   <widget class="QLabel" name="type">
-    <property name="geometry">
-     <rect>
-      <x>610</x>
-      <y>300</y>
-      <width>81</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Choose Type</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="format">
-    <property name="geometry">
-     <rect>
-      <x>600</x>
-      <y>460</y>
-      <width>91</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Choose Format</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="fileFormat">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>460</y>
-      <width>69</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="dlDirectory">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>370</y>
-      <width>341</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="chooseDirectory">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>350</y>
-      <width>101</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Choose Directory</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="browseDir">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>370</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Browse</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="enterURL">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>250</y>
-      <width>47</width>
-      <height>13</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Enter URL</string>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="console">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>10</y>
-      <width>421</width>
-      <height>231</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="filename">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>430</y>
-      <width>421</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>410</y>
-      <width>211</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Type Filename (or leave blank for default)</string>
-    </property>
-   </widget>
+    <item row="1" column="1">
+     <widget class="QLabel" name="enterURL">
+      <property name="text">
+       <string>Enter URL</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1" colspan="4">
+     <widget class="QLineEdit" name="urlBox"/>
+    </item>
+    <item row="3" column="2" colspan="2">
+     <widget class="QLabel" name="type">
+      <property name="text">
+       <string>Choose Type</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4">
+     <widget class="QComboBox" name="fileType">
+      <item>
+       <property name="text">
+        <string>Video</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Audio</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLabel" name="chooseDirectory">
+      <property name="text">
+       <string>Choose Directory</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QPushButton" name="processURL">
+      <property name="text">
+       <string>Process URL</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1" colspan="3">
+     <widget class="QLineEdit" name="dlDirectory"/>
+    </item>
+    <item row="5" column="4">
+     <widget class="QPushButton" name="browseDir">
+      <property name="text">
+       <string>Browse</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Type Filename (or leave blank for default)</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1" colspan="4">
+     <widget class="QLineEdit" name="filename"/>
+    </item>
+    <item row="8" column="4">
+     <widget class="QComboBox" name="fileFormat">
+      <item>
+       <property name="text">
+        <string>x264</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="9" column="3" colspan="2">
+     <widget class="QPushButton" name="download">
+      <property name="text">
+       <string>Download</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1" colspan="3">
+     <widget class="QLabel" name="format">
+      <property name="text">
+       <string>Choose Video Encoder (when using video type only)</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>826</width>
      <height>21</height>
     </rect>
    </property>
@@ -253,8 +152,8 @@
      <y>542</y>
     </hint>
     <hint type="destinationlabel">
-     <x>620</x>
-     <y>302</y>
+     <x>716</x>
+     <y>380</y>
     </hint>
    </hints>
   </connection>
@@ -265,12 +164,12 @@
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>556</x>
-     <y>303</y>
+     <x>652</x>
+     <y>380</y>
     </hint>
     <hint type="destinationlabel">
-     <x>740</x>
-     <y>393</y>
+     <x>782</x>
+     <y>435</y>
     </hint>
    </hints>
   </connection>

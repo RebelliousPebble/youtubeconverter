@@ -23,3 +23,6 @@ def ButtonClicked(self):
     for i in range(self.tableV5.rowCount()):
         if self.tableV5.item(i, 0).checkState() == QtCore.Qt.Checked:
             checked_listV5.append(self.tableV5.item(i, 1).text())
+
+            ffmpeg -i "audio" -i "video" -y -acodec libfdk_aac -b:a 128k -vcodec libx264 -preset fast -crf 20 "new.mp4"
+            ffmpeg -i "audio" -y -codec:a libmp3lame -ac 2 -ar 44100 -ab 160k "new.mp3"
