@@ -8,6 +8,7 @@ import sys
 import time
 import traceback
 import tempfile
+import ffmpy
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -29,18 +30,17 @@ class MergeAudioVideo(QtCore.QRunnable):
             'x264': 'libx264'
         }
 
-
     def run(self):
         print('converting')
-        cmd = 'ffmpeg -i '+ self.audio_path + ' -i ' + self.video_path + ' -y -acodec libfdk_aac -b:a 160k -vcodec' + self.codecs[self.vidcodec] +' -preset fast -crf 20 ' + self.output_path
-        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        (result, error) = process.communicate()
-
-        rc = process.wait()
-
-        if rc != 0:
-            print("Error: failed to execute command:", cmd)
-            print(error)
+        cmd = ('ffmpeg -i ' + '"' + self.audio_path + '"' + ' -i ' + '"' + self.video_path + '"' + ' -y -acodec libfdk_aac -b:a 160k -vcodec libx264 -preset fast -crf 20 ' + '"' + self.output_path + '"')
+        print(cmd)
+        time.sleep(2)
+        subprocess.run(cmd)
+        #ff = ffmpy.FFmpeg(
+       #     inputs={self.audio_path: None, self.video_path: None},
+        #    outputs={self.output_path: '-c:a libfdk_aac -b:a 160k -v:a ' + self.codecs[self.vidcodec] +' -preset fast -crf 20'}
+        #)
+       # print(ff.cmd)
 
 
 class ConvertAudio(QtCore.QRunnable):
@@ -201,18 +201,18 @@ class YTConverter(Ui_MainWindow):
                 if filename:
                     for i in checked_list:
                         p = MergeAudioVideo(
-                            self.tempdir + filename + ' - audio.webm',
-                            self.tempdir + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.webm',
-                            self.dlDirectory.text() + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.mp4',
+                            self.tempdir + '\\' + filename + ' - audio.webm',
+                            self.tempdir + '\\' + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.webm',
+                            self.dlDirectory.text() + '\\' + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.mp4',
                             self.fileFormat.currentText()
                         )
                         self.threadpool.start(p)
                 else:
                     for i in checked_list:
                         p = MergeAudioVideo(
-                            self.tempdir + filename + ' - audio.webm',
-                            self.tempdir + self.yt.title + ' - ' + self.yt.streams.get_by_itag(int(i)).resolution + '.webm',
-                            self.dlDirectory.text() + self.yt.title + ' - ' + self.yt.streams.get_by_itag(int(i)).resolution + '.mp4',
+                            self.tempdir + '\\' + self.yt.title + ' - audio.webm',
+                            self.tempdir + '\\' + self.yt.title + ' - ' + self.yt.streams.get_by_itag(int(i)).resolution + '.webm',
+                            self.dlDirectory.text() + '/' + self.yt.title + ' - ' + self.yt.streams.get_by_itag(int(i)).resolution + '.mp4',
                             str(self.yt.streams.get_by_itag(int(i)).abr).strip('bps')
                         )
                         self.threadpool.start(p)
@@ -220,15 +220,13 @@ class YTConverter(Ui_MainWindow):
                 if filename:
                     for i in checked_list:
                         p = ConvertAudio(
-                            self.tempdir + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.webm',
-                            str(self.dlDirectory.text() + filename + ' - ' + str(self.yt.streams.get_by_itag(int(i)).abr) + '.mp3'),
+                            self.tempdir + '\\' + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.webm',
+                            str(self.dlDirectory.text() + '/' + filename + ' - ' + str(self.yt.streams.get_by_itag(int(i)).abr) + '.mp3'),
                             str(self.yt.streams.get_by_itag(int(i)).abr).strip('bps')
                         )
                         self.threadpool.start(p)
         except:
             traceback.print_exc()
-        self.threadpool.waitForDone()
-        self.finishdownload()
 
 
 if __name__ == "__main__":
