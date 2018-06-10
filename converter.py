@@ -3,15 +3,19 @@ import pytube
 from hurry.filesize import verbose
 from hurry.filesize import size
 import os
-import multiprocessing as mp
+import subprocess
 import sys
 import time
 import traceback
 import tempfile
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from qt_mainwindow import Ui_MainWindow
 from downloaddialog import Ui_DownloadDialog
+
+class WorkerSignals(QtCore.QObject):
+    finished = QtCore.pyqtSignal()
 
 
 class MergeAudioVideo(QtCore.QRunnable):
@@ -27,7 +31,17 @@ class MergeAudioVideo(QtCore.QRunnable):
 
 
     def run(self):
-        os.system('ffmpeg -i '+ self.audio_path + ' -i ' + self.video_path + ' -y -acodec libfdk_aac -b:a 160k -vcodec' + self.codecs[self.vidcodec] +' -preset fast -crf 20 ' + self.output_path)
+        print('converting')
+        cmd = 'ffmpeg -i '+ self.audio_path + ' -i ' + self.video_path + ' -y -acodec libfdk_aac -b:a 160k -vcodec' + self.codecs[self.vidcodec] +' -preset fast -crf 20 ' + self.output_path
+        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        (result, error) = process.communicate()
+
+        rc = process.wait()
+
+        if rc != 0:
+            print("Error: failed to execute command:", cmd)
+            print(error)
+
 
 class ConvertAudio(QtCore.QRunnable):
     def __init__(self, audio_path, output_path, br):
@@ -74,12 +88,8 @@ class YTConverter(Ui_MainWindow):
 
 
     def finishdownload(self):
-        """
-        Show the message that fetching posts is done.
-        Disable Stop button, enable the Start one and reset progress bar to 0
-        """
         self.download.setEnabled(True)
-        QtGui.QMessageBox.information(self, "Done!", "Finished Downloading!!")
+        QtWidgets.QMessageBox.information(self, "Done!", "Finished Downloading!!")
 
     def processurlpressed(self):
         url = self.urlBox.text()
@@ -201,8 +211,8 @@ class YTConverter(Ui_MainWindow):
                     for i in checked_list:
                         p = MergeAudioVideo(
                             self.tempdir + filename + ' - audio.webm',
-                            self.tempdir + self.yt.title + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.webm',
-                            self.dlDirectory.text() + self.yt.title + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.mp4',
+                            self.tempdir + self.yt.title + ' - ' + self.yt.streams.get_by_itag(int(i)).resolution + '.webm',
+                            self.dlDirectory.text() + self.yt.title + ' - ' + self.yt.streams.get_by_itag(int(i)).resolution + '.mp4',
                             str(self.yt.streams.get_by_itag(int(i)).abr).strip('bps')
                         )
                         self.threadpool.start(p)
