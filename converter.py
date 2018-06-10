@@ -58,7 +58,6 @@ class DownloadFileThread(QtCore.QRunnable):
 
 class YTConverter(Ui_MainWindow):
     def __init__(self, MainWindow):
-        self.yt = 0
         self.tempdir = tempfile.gettempdir()
         Ui_MainWindow.__init__(self)
         self.setupUi(MainWindow)
@@ -212,7 +211,7 @@ class YTConverter(Ui_MainWindow):
                     for i in checked_list:
                         p = ConvertAudio(
                             self.tempdir + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.webm',
-                            self.dlDirectory.text() + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.mp3',
+                            str(self.dlDirectory.text() + filename + ' - ' + str(self.yt.streams.get_by_itag(int(i)).abr) + '.mp3'),
                             str(self.yt.streams.get_by_itag(int(i)).abr).strip('bps')
                         )
                         self.threadpool.start(p)
