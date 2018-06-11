@@ -2,6 +2,7 @@ from pytube import YouTube
 import pytube
 from filesize import verbose
 from filesize import size
+import os
 import subprocess
 import sys
 import time
@@ -13,9 +14,6 @@ import tempfile
 from PyQt5 import QtCore, QtGui, QtWidgets
 from qt_mainwindow import Ui_MainWindow
 
-class WorkerSignals(QtCore.QObject):
-    finished = QtCore.pyqtSignal()
-
 
 class MergeAudioVideo(QtCore.QRunnable):
     def __init__(self, audio_path, video_path, output_path):
@@ -25,7 +23,6 @@ class MergeAudioVideo(QtCore.QRunnable):
         self.output_path = output_path
 
     def run(self):
-        print('converting')
         cmd = ('ffmpeg -i ' + '"' + self.audio_path + '"' + ' -i ' + '"' + self.video_path + '"' + ' -y -acodec aac -b:a 160k -vcodec libx264 -preset fast -crf 20 ' + '"' + self.output_path + '"')
         print(cmd)
         subprocess.run(cmd)
@@ -33,14 +30,17 @@ class MergeAudioVideo(QtCore.QRunnable):
 
 class ConvertAudio(QtCore.QRunnable):
     def __init__(self, audio_path, output_path):
-        QtCore.QRunnable.__init__()
+        QtCore.QRunnable.__init__(self)
         self.audio_path = audio_path
         self.output_path = output_path
 
     def run(self):
-        cmd = ('ffmpeg -i ' + '"' + self.audio_path + '"' + ' -y -codec:a libmp3lame -ac 2 -ar 44100 -ab 160k ' + '"' + self.output_path + '"')
+        if os.path.isfile(self.output_path):
+            os.remove(self.output_path)
+        cmd = ('ffmpeg -i ' + '"' + self.audio_path + '"' + ' -vn -ab 320k -ar 44100 -f mp3 ' + '"' + self.output_path + '"')
         print(cmd)
         subprocess.run(cmd)
+
 class DownloadFileThread(QtCore.QRunnable):
     def __init__(self, yt, itag, directory, name=None):
         QtCore.QRunnable.__init__(self)
@@ -151,6 +151,7 @@ class YTConverter(Ui_MainWindow):
         for i in range(self.fileTable.rowCount()):
             if self.fileTable.item(i, 0).checkState() == QtCore.Qt.Checked:
                 checked_list.append(self.fileTable.item(i, 1).text().strip('iTag: '))
+        self.consolewrite('Downloading Content\n')
         if self.fileType.currentText() == 'Video':
             try:
                 self.threadpool = QtCore.QThreadPool()
@@ -188,6 +189,7 @@ class YTConverter(Ui_MainWindow):
         try:
             if self.fileType.currentText() == 'Video':
                 if filename:
+                    self.consolewrite('Converting Video\n')
                     for i in checked_list:
                         p = MergeAudioVideo(
                             self.tempdir + '\\' + filename + ' - audio.webm',
@@ -196,6 +198,7 @@ class YTConverter(Ui_MainWindow):
                         )
                         self.threadpool.start(p)
                 else:
+                    self.consolewrite('Converting Video\n')
                     for i in checked_list:
                         p = MergeAudioVideo(
                             self.tempdir + '\\' + self.yt.title + ' - audio.webm',
@@ -205,11 +208,19 @@ class YTConverter(Ui_MainWindow):
                         self.threadpool.start(p)
             elif self.fileType.currentText() == 'Audio':
                 if filename:
+                    self.consolewrite('Converting Audio')
                     for i in checked_list:
                         p = ConvertAudio(
                             self.tempdir + '\\' + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.webm',
-                            str(self.dlDirectory.text() + '/' + filename + ' - ' + str(self.yt.streams.get_by_itag(int(i)).abr) + '.mp3'),
-                            str(self.yt.streams.get_by_itag(int(i)).abr).strip('bps')
+                            str(self.dlDirectory.text() + '/' + filename + ' - ' + str(self.yt.streams.get_by_itag(int(i)).abr) + '.mp3')
+                        )
+                        self.threadpool.start(p)
+                else:
+                    self.consolewrite('Converting Audio\n')
+                    for i in checked_list:
+                        p = ConvertAudio(
+                            self.tempdir + '\\' + self.yt.title + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.webm',
+                            str(self.dlDirectory.text() + '/' + self.yt.name + ' - ' + str(self.yt.streams.get_by_itag(int(i)).abr) + '.mp3')
                         )
                         self.threadpool.start(p)
         except:
