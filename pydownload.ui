@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1118</width>
-    <height>593</height>
+    <width>1106</width>
+    <height>631</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,31 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" rowspan="10">
+    <item row="8" column="4">
+     <widget class="QPushButton" name="browseDir">
+      <property name="text">
+       <string>Browse</string>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="1">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Type Filename (or leave blank for default)</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QLabel" name="chooseDirectory">
+      <property name="text">
+       <string>Choose Directory</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1" colspan="4">
+     <widget class="QLineEdit" name="urlBox"/>
+    </item>
+    <item row="0" column="0" rowspan="15">
      <widget class="QTableWidget" name="fileTable"/>
     </item>
     <item row="0" column="1" colspan="4">
@@ -28,10 +52,50 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1" colspan="4">
-     <widget class="QLineEdit" name="urlBox"/>
+    <item row="13" column="4">
+     <widget class="QPushButton" name="download">
+      <property name="text">
+       <string>Download</string>
+      </property>
+     </widget>
     </item>
-    <item row="3" column="2" colspan="2">
+    <item row="11" column="1" colspan="4">
+     <widget class="QLineEdit" name="filename"/>
+    </item>
+    <item row="12" column="4">
+     <widget class="QComboBox" name="fileFormat">
+      <item>
+       <property name="text">
+        <string>x264</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="12" column="1" colspan="3">
+     <widget class="QLabel" name="format">
+      <property name="text">
+       <string>Choose Video Encoder (when using video type only)</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="4">
+     <widget class="QPushButton" name="processURL">
+      <property name="text">
+       <string>Process URL</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1" colspan="4">
+     <widget class="QLineEdit" name="dlDirectory">
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="dragEnabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
      <widget class="QLabel" name="type">
       <property name="text">
        <string>Choose Type</string>
@@ -52,63 +116,6 @@
       </item>
      </widget>
     </item>
-    <item row="4" column="1">
-     <widget class="QLabel" name="chooseDirectory">
-      <property name="text">
-       <string>Choose Directory</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="4">
-     <widget class="QPushButton" name="processURL">
-      <property name="text">
-       <string>Process URL</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="1" colspan="3">
-     <widget class="QLineEdit" name="dlDirectory"/>
-    </item>
-    <item row="5" column="4">
-     <widget class="QPushButton" name="browseDir">
-      <property name="text">
-       <string>Browse</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="1">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Type Filename (or leave blank for default)</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="1" colspan="4">
-     <widget class="QLineEdit" name="filename"/>
-    </item>
-    <item row="8" column="4">
-     <widget class="QComboBox" name="fileFormat">
-      <item>
-       <property name="text">
-        <string>x264</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="9" column="3" colspan="2">
-     <widget class="QPushButton" name="download">
-      <property name="text">
-       <string>Download</string>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="1" colspan="3">
-     <widget class="QLabel" name="format">
-      <property name="text">
-       <string>Choose Video Encoder (when using video type only)</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -116,7 +123,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1118</width>
+     <width>1106</width>
      <height>21</height>
     </rect>
    </property>
@@ -131,12 +138,8 @@
  </widget>
  <tabstops>
   <tabstop>urlBox</tabstop>
-  <tabstop>fileType</tabstop>
   <tabstop>fileFormat</tabstop>
-  <tabstop>processURL</tabstop>
-  <tabstop>browseDir</tabstop>
   <tabstop>dlDirectory</tabstop>
-  <tabstop>download</tabstop>
   <tabstop>fileTable</tabstop>
  </tabstops>
  <resources/>

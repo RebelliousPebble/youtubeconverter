@@ -1,58 +1,46 @@
 from pytube import YouTube
 import pytube
-from hurry.filesize import verbose
-from hurry.filesize import size
-import os
+from filesize import verbose
+from filesize import size
 import subprocess
 import sys
 import time
 import traceback
 import tempfile
-import ffmpy
+
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from qt_mainwindow import Ui_MainWindow
-from downloaddialog import Ui_DownloadDialog
 
 class WorkerSignals(QtCore.QObject):
     finished = QtCore.pyqtSignal()
 
 
 class MergeAudioVideo(QtCore.QRunnable):
-    def __init__(self, audio_path, video_path, output_path, vidcodec):
+    def __init__(self, audio_path, video_path, output_path):
         QtCore.QRunnable.__init__(self)
         self.audio_path = audio_path
         self.video_path = video_path
         self.output_path = output_path
-        self.vidcodec = vidcodec
-        self.codecs = {
-            'x264': 'libx264'
-        }
 
     def run(self):
         print('converting')
-        cmd = ('ffmpeg -i ' + '"' + self.audio_path + '"' + ' -i ' + '"' + self.video_path + '"' + ' -y -acodec libfdk_aac -b:a 160k -vcodec libx264 -preset fast -crf 20 ' + '"' + self.output_path + '"')
+        cmd = ('ffmpeg -i ' + '"' + self.audio_path + '"' + ' -i ' + '"' + self.video_path + '"' + ' -y -acodec aac -b:a 160k -vcodec libx264 -preset fast -crf 20 ' + '"' + self.output_path + '"')
         print(cmd)
-        time.sleep(2)
         subprocess.run(cmd)
-        #ff = ffmpy.FFmpeg(
-       #     inputs={self.audio_path: None, self.video_path: None},
-        #    outputs={self.output_path: '-c:a libfdk_aac -b:a 160k -v:a ' + self.codecs[self.vidcodec] +' -preset fast -crf 20'}
-        #)
-       # print(ff.cmd)
 
 
 class ConvertAudio(QtCore.QRunnable):
-    def __init__(self, audio_path, output_path, br):
+    def __init__(self, audio_path, output_path):
         QtCore.QRunnable.__init__()
         self.audio_path = audio_path
         self.output_path = output_path
-        self.br = br
 
     def run(self):
-        os.system('ffmpeg -i ' + self.audio_path + ' -y -codec:a libmp3lame -ac 2 -ar 44100 -ab 160k ' + self.output_path)
-
+        cmd = ('ffmpeg -i ' + '"' + self.audio_path + '"' + ' -y -codec:a libmp3lame -ac 2 -ar 44100 -ab 160k ' + '"' + self.output_path + '"')
+        print(cmd)
+        subprocess.run(cmd)
 class DownloadFileThread(QtCore.QRunnable):
     def __init__(self, yt, itag, directory, name=None):
         QtCore.QRunnable.__init__(self)
@@ -150,10 +138,11 @@ class YTConverter(Ui_MainWindow):
                 traceback.print_exc()
 
     def browsepressed(self):
-        file = str(QtWidgets.QFileDialog.getExistingDirectoryUrl(None, "Select Download Directory"))
-        file = file.strip("PyQt5.QtCore.QUrl('file:///")
-        file = file.strip("')")
+        file = QtWidgets.QFileDialog.getExistingDirectoryUrl(None, "Select Download Directory")
+        file = file.toString()
+        file=file[8:]
         self.dlDirectory.setText(file)
+
 
     def downloadpressed(self):
         self.download.setEnabled(True)
@@ -203,8 +192,7 @@ class YTConverter(Ui_MainWindow):
                         p = MergeAudioVideo(
                             self.tempdir + '\\' + filename + ' - audio.webm',
                             self.tempdir + '\\' + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.webm',
-                            self.dlDirectory.text() + '\\' + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.mp4',
-                            self.fileFormat.currentText()
+                            self.dlDirectory.text() + '\\' + filename + ' - ' + self.yt.streams.get_by_itag(int(i)).abr + '.mp4'
                         )
                         self.threadpool.start(p)
                 else:
@@ -213,7 +201,6 @@ class YTConverter(Ui_MainWindow):
                             self.tempdir + '\\' + self.yt.title + ' - audio.webm',
                             self.tempdir + '\\' + self.yt.title + ' - ' + self.yt.streams.get_by_itag(int(i)).resolution + '.webm',
                             self.dlDirectory.text() + '/' + self.yt.title + ' - ' + self.yt.streams.get_by_itag(int(i)).resolution + '.mp4',
-                            str(self.yt.streams.get_by_itag(int(i)).abr).strip('bps')
                         )
                         self.threadpool.start(p)
             elif self.fileType.currentText() == 'Audio':
