@@ -1,2 +1,5 @@
 pytube
 pyqt5
+moviepy
+imageio
+requests

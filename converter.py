@@ -8,6 +8,8 @@ import sys
 import time
 import traceback
 import tempfile
+import imageio
+import moviepy.editor as mp
 
 
 
@@ -23,10 +25,16 @@ class MergeAudioVideo(QtCore.QRunnable):
         self.output_path = output_path
 
     def run(self):
+        '''
         cmd = ('ffmpeg -i ' + '"' + self.audio_path + '"' + ' -i ' + '"' + self.video_path + '"' + ' -y -acodec aac -b:a 160k -vcodec libx264 -preset fast -crf 20 ' + '"' + self.output_path + '"')
         print(cmd)
         subprocess.run(cmd)
-
+        '''
+        audio = mp.AudioFileClip(self.audio_path)
+        #newaudiopath = self.audio_path[:5]+'.mp3'
+        #audio.write_audiofile(newaudiopath, codec=)
+        final = mp.VideoFileClip(self.video_path).set_audio(audio)
+        final.write_videofile(self.output_path, codec='libx264', audio_codec='libmp3lame')
 
 class ConvertAudio(QtCore.QRunnable):
     def __init__(self, audio_path, output_path):

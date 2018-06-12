@@ -1,4 +1,4 @@
-language: python
+language: objective-c
 os:
   - linux
   - osx
@@ -6,4 +6,4 @@ os:
 python: 3.6
 install:
   pip install -r requirements.txt
-script: python pyinstaller --windowed --onefile --add-data=ffmpeg:ffmpeg converter.py
+script: pyinstaller --windowed --onefile --add-data=ffmpeg:ffmpeg converter.py
