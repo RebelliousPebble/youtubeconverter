@@ -4,8 +4,8 @@ block_cipher = None
 
 
 a = Analysis(['converter.py'],
-             pathex=['C:\\Users\\glenn\\PycharmProjects\\youtubeconverter', 'C:\\Users\\glenn\\AppData\\Local\\conda\\conda\\envs\\Py36\\Lib\\encodings'],
-             binaries=[('C:\\Users\\glenn\\PycharmProjects\\youtubeconverter\\third_party\\win\\ffmpeg.exe', 'ffmpeg.exe')],
+             pathex=['\\Volumes\\Data\\Scripts\\youtubeconverter'],
+             binaries=[('third_party\\mac\\ffmpeg', 'ffmpeg')],
              datas=[],
              hiddenimports=[],
              hookspath=[],
