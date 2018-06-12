@@ -33,9 +33,6 @@ class Ui_MainWindow(object):
         self.fileTable.setColumnCount(0)
         self.fileTable.setRowCount(0)
         self.gridLayout.addWidget(self.fileTable, 0, 0, 15, 1)
-        self.console = QtWidgets.QTextBrowser(self.centralwidget)
-        self.console.setObjectName("console")
-        self.gridLayout.addWidget(self.console, 0, 1, 1, 4)
         self.enterURL = QtWidgets.QLabel(self.centralwidget)
         self.enterURL.setObjectName("enterURL")
         self.gridLayout.addWidget(self.enterURL, 1, 1, 1, 1)
@@ -68,6 +65,9 @@ class Ui_MainWindow(object):
         self.fileType.addItem("")
         self.fileType.addItem("")
         self.gridLayout.addWidget(self.fileType, 3, 4, 1, 1)
+        self.console = QtWidgets.QTextEdit(self.centralwidget)
+        self.console.setObjectName("console")
+        self.gridLayout.addWidget(self.console, 0, 1, 1, 4)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1106, 21))
@@ -102,5 +102,10 @@ class Ui_MainWindow(object):
         self.type.setText(_translate("MainWindow", "Choose Type"))
         self.fileType.setItemText(0, _translate("MainWindow", "Video"))
         self.fileType.setItemText(1, _translate("MainWindow", "Audio"))
+        self.console.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Console</p></body></html>"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
 
