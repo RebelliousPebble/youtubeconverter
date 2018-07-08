@@ -7,7 +7,8 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
     sudo pip3 install pyqt5 moviepy requests pytube movieio
 else
     sudo apt get install python36
-    sudo pip install pyqt5 moviepy requests pytube movieio
+    sudo apt-get install python3-pyqt5
+    sudo pip install requests pytube movieio
 fi
 
 

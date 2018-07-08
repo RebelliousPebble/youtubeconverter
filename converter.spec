@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['converter.py'],
-             pathex=['C:\\Users\\glenn\\PycharmProjects\\youtubeconverter'],
+             pathex=['C:\\Users\\glenn\\PycharmProjects\\youtubeconverter', 'C:\\Users\\glenn\\PycharmProjects\\youtubeconverter\\moviepy'],
              binaries=[],
              datas=[],
              hiddenimports=[],
