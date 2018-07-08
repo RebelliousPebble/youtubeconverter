@@ -9,11 +9,14 @@ import time
 import traceback
 import tempfile
 import moviepy.editor as mp
+import imageio
 
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from qt_mainwindow import Ui_MainWindow
+
+imageio.plugins.ffmpeg.download()
 
 
 class MergeAudioVideo(QtCore.QRunnable):
@@ -24,11 +27,14 @@ class MergeAudioVideo(QtCore.QRunnable):
         self.output_path = output_path
 
     def run(self):
-        if os.path.isfile(self.output_path):
-            os.remove(self.output_path)
-        audio = mp.AudioFileClip(self.audio_path)
-        final = mp.VideoFileClip(self.video_path).set_audio(audio)
-        final.write_videofile(self.output_path, codec='libx264', audio_codec='libmp3lame')
+        try:
+            if os.path.isfile(self.output_path):
+                os.remove(self.output_path)
+            audio = mp.AudioFileClip(self.audio_path)
+            final = mp.VideoFileClip(self.video_path).set_audio(audio)
+            final.write_videofile(self.output_path, codec='libx264', audio_codec='libmp3lame')
+        except:
+            traceback.print_exc()
 
 class ConvertAudio(QtCore.QRunnable):
     def __init__(self, audio_path, output_path):
@@ -37,10 +43,13 @@ class ConvertAudio(QtCore.QRunnable):
         self.output_path = output_path
 
     def run(self):
-        if os.path.isfile(self.output_path):
-            os.remove(self.output_path)
-        audio = mp.AudioFileClip(self.audio_path)
-        audio.write_audiofile(self.output_path, codec='libmp3lame')
+        try:
+            if os.path.isfile(self.output_path):
+                os.remove(self.output_path)
+            audio = mp.AudioFileClip(self.audio_path)
+            audio.write_audiofile(self.output_path, codec='libmp3lame')
+        except:
+            traceback.print_exc()
 
 class DownloadFileThread(QtCore.QRunnable):
     def __init__(self, yt, itag, directory, name=None):
