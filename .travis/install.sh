@@ -8,4 +8,4 @@ else
     sudo apt get install python36
 fi
 
-sudo pip install pyqt5 moviepy requests pytube movieio
+sudo pip3 install pyqt5 moviepy requests pytube movieio
