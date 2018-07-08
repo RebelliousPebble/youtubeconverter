@@ -8,7 +8,7 @@ import sys
 import time
 import traceback
 import tempfile
-import moviepy.editor as mp
+import __moviepy.editor as mp
 import imageio
 
 
