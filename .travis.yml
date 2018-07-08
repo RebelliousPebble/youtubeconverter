@@ -10,7 +10,7 @@ matrix:
       sudo: required
       env: TOXENV=py36
 before_install:
-  - chmod +x install.sh
+  - chmod +x '.travis/install.sh'
 install:
   ./.travis/install.sh
 script: pyinstaller --windowed --onefile converter.py
