@@ -199,6 +199,7 @@ class YTConverter(Ui_MainWindow):
             if self.fileType.currentText() == 'Video':
                 if filename:
                     self.consolewrite('Converting Video\n')
+                    self.consolewrite('Check Python Console for progress and completion')
                     for i in checked_list:
                         p = MergeAudioVideo(
                             self.tempdir + '\\' + filename + ' - audio.webm',

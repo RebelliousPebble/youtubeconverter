@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['converter.py'],
-             pathex=['C:\\Users\\glenn\\PycharmProjects\\youtubeconverter', 'C:\\Users\\glenn\\PycharmProjects\\youtubeconverter\\__moviepy'],
+             pathex=['C:\\Users\\glenn\\PycharmProjects\\youtubeconverter'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -19,13 +19,17 @@ pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
-          a.binaries,
-          a.zipfiles,
-          a.datas,
           [],
+          exclude_binaries=True,
           name='converter',
           debug=False,
           strip=False,
           upx=True,
-          runtime_tmpdir=None,
-          console=False )
+          console=True )
+coll = COLLECT(exe,
+               a.binaries,
+               a.zipfiles,
+               a.datas,
+               strip=False,
+               upx=True,
+               name='converter')
