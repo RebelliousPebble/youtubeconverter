@@ -4,7 +4,7 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
     brew update
     brew outdates xctool || brew upgrade xctool
     brew upgrade python
-    pip3 install --user pyqt5 requests pytube imageio pyinstaller git+https://github.com/RebelliousPebble/moviepy.git
+    sudo pip3 install pyqt5 requests pytube imageio pyinstaller git+https://github.com/RebelliousPebble/moviepy.git
     export PATH=$PATH:/Users/travis/Library/Python/3.7/bin
     echo $PATH
 else
