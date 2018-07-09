@@ -20,3 +20,4 @@ deploy:
   file: dist/converter
   on:
     repo: RebelliousPebble/youtubeconverter
+    branch: master
